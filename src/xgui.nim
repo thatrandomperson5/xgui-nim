@@ -13,7 +13,7 @@ import xgui/[nn, defaults], std/[tables]
 ##
 ## Examples
 ## =========
-## Basic nim code
+## **Basic nim code**
 ##
 ## .. code:: nim
 ##
@@ -31,7 +31,7 @@ import xgui/[nn, defaults], std/[tables]
 ##
 ## ..
 ##
-## Basic xml
+## **Basic xml**
 ## 
 ## .. code: xml
 ##
