@@ -1,0 +1,21 @@
+# ignore files with no extention:
+*
+!*/
+!*.*
+!LICENSE
+
+# normal ignores:
+*.exe
+nimcache
+*.pdb
+*.ilk
+.*
+!.gitignore
+
+# Replit stuff
+boot.sh
+shell.nix
+BOOTLOG
+nimble-env
+init.sh
+nimv.txt
