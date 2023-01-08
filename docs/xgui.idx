@@ -1,0 +1,3 @@
+xmlAliases	xgui.html#xmlAliases	xgui: xmlAliases	
+loadGui	xgui.html#loadGui.m,static[string],static[Table[string,string]]	xgui: loadGui(filename: static[string]; aliases: static[Table[string, string]]): untyped	
+loadGui	xgui.html#loadGui.t,static[string]	xgui: loadGui(filename: static[string]): untyped	

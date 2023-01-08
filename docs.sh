@@ -1,0 +1,1 @@
+nim doc --project --index:on --git.url:"https://github.com/thatrandomperson5/xgui-nim" --git.commit:master --outdir:docs src/xgui.nim

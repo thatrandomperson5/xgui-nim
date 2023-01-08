@@ -1,0 +1,2 @@
+handleXml	xgui/nn.html#handleXml,string	nn: handleXml(filename: string): XmlNode	
+buildBlock	xgui/nn.html#buildBlock,XmlNode,Table[string,string]	nn: buildBlock(node: XmlNode; aliases: Table[string, string]): NimNode	
