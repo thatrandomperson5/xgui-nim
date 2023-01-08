@@ -51,6 +51,9 @@ import xgui/[nn, defaults], std/[tables]
 ##   </Window>
 ##
 ## ..
+## 
+## The above produces this:
+##
 ##
 ## Special attributes
 ## ===================
