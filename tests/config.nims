@@ -1,0 +1,3 @@
+--path:"../src"
+--path:"./xml"
+--path:"."

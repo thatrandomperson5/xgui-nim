@@ -1,0 +1,6 @@
+<Window title="xgui w/ nigui" width=100>
+  <LayoutContainer XD-layout="Layout_Horizontal">
+      <l>Hello world</l>
+      <link ref="textarea.xml"></link>
+  </LayoutContainer>
+</Window>
