@@ -75,7 +75,7 @@ proc makeScript(node: XmlNode, parent: NimNode): NimNode =
   nnodes = nnodes.searchAndTransform(parentNode, newTree(nnkBracketExpr, parentNode))
   nnodes = nnodes.findTagCalls()
   result.add nnodes
-  # result = newBlockStmt(result)
+  result = newBlockStmt(result)
 
 proc inferValue(v: string, name: string): NimNode =
   ## Value inferation, like `"100"` will be turned into `100`
