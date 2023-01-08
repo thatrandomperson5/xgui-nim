@@ -9,6 +9,46 @@ import xgui/[nn, defaults], std/[tables]
 ## - The tag name is the type, eg `Button`, `LayoutContainer`
 ## - The attributes are the fields on the object
 ## - The text is an alias for the `text` field.
+## - Tags are declared with the `tag` attribute and are found using the `getTag()` call
+##
+## Examples
+## =========
+## Basic nim code:
+## .. code:: nim
+##
+## import xgui, nigui
+## 
+## app.init() # Init the nigui app
+## 
+## let w = loadGui("basic.xml") # Load the xml into nigui objects
+## w.width = 600.scaleToDpi # Set the height
+## w.height = 400.scaleToDpi # Set the width
+##
+## w.show() # Show the window
+## 
+## app.run() # Run the app
+##
+## ..
+##
+## Basic xml
+## .. code: xml
+##
+## <Window title="NiGui &amp; XGui Example">
+##   <LayoutContainer>
+##     <Button tag="btn">
+##       Button 1
+##     </Button>
+##     <TextArea tag="txt"></TextArea>
+##     <script>
+##       getTag("btn").onClick = proc (event: ClickEvent) = # Get the button obj and add an event callback
+##         getTag("txt").addLine("Button 1 clicked, message box opened.") # Add a line to the TextArea
+##         getTag("window").alert("This is a simple message box.") # Open a alert on the top-level Window
+##         getTag("txt").addLine("Message box closed.") 
+##     </script>
+##   </LayoutContainer>
+## </Window>
+##
+## ..
 ##
 ## Special attributes
 ## ===================

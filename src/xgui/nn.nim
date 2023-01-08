@@ -1,5 +1,7 @@
 import std/[xmltree, xmlparser, parsexml, macros, tables, strutils, strtabs]
 
+var tags {.compileTime.} = initTable[string, NimNode]()
+
 # ----------------------------------------------------------------------------------------
 #                                    Xml Reader
 # ----------------------------------------------------------------------------------------
@@ -40,6 +42,17 @@ proc searchAndTransform(obj: NimNode, f: NimNode, r: NimNode): NimNode =
     else:
       result.add searchAndTransform(child, f, r)
 
+proc findTagCalls(obj: NimNode): NimNode =
+  if obj.len < 1:
+    return obj
+  result = newNimNode(obj.kind)
+  for child in obj:
+    if child.kind == nnkCall and child[0] == newIdentNode("getTag"):
+      expectKind(child[1], nnkStrLit)
+      result.add tags[child[1].strVal]
+    else:
+      result.add findTagCalls(child)
+
 
 proc makeScript(node: XmlNode, parent: NimNode): NimNode =
   ## Make script tag internals. Provide the `parent` pointer
@@ -53,7 +66,8 @@ proc makeScript(node: XmlNode, parent: NimNode): NimNode =
     parentNode,
     newTree(nnkCommand, newIdentNode("unsafeAddr"), parent)
   )
-  nnodes = searchAndTransform(nnodes, parentNode, newTree(nnkBracketExpr, parentNode))
+  nnodes = nnodes.searchAndTransform(parentNode, newTree(nnkBracketExpr, parentNode))
+  nnodes = nnodes.findTagCalls()
   result.add nnodes
   result = newBlockStmt(result)
 
@@ -117,19 +131,23 @@ template childHandler(): untyped =
 
 proc buildBlock(node: XmlNode, aliases: Table[string, string]): NimNode = 
   ## Builds xml into block stmts
-
   result = newStmtList()
   let nameSym = genSym(ident="xguiElement")
   var procname: string = node.tag
   if procname in aliases:
     procname = aliases[procname]
+  if procname == "Window":
+    tags["window"] = nameSym
+
   result.add newLetStmt(nameSym, newCall(
     newIdentNode("new" & procname)
   ))
-
   if not node.attrs.isNil:
     for key, value in node.attrs:
       var realKey = key
+      if realKey == "tag":
+        tags[value] = nameSym
+        continue
       if key.startswith("X"):
         realKey = key[3..^1]
       result.add newAssignment(

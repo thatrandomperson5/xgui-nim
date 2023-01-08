@@ -1,5 +1,5 @@
 <Container>
-<TextArea>
+<TextArea tag="txt">
   Lorem ipsum dolor sit amet, 
   consectetur adipiscing elit, 
   sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
@@ -9,11 +9,11 @@
   Excepteur sint occaecat cupidatat non proident, 
   sunt in culpa qui officia deserunt mollit anim id est laborum.
 </TextArea>
-<Button>
+<Button tag="thebutton">
   Add line
 </Button>
 <script>
-  parent.childControls[1].onClick = proc(e: ClickEvent) = 
-    parent.childControls[0].TextArea.addLine("Line added!")
+  getTag("thebutton").onClick = proc(e: ClickEvent) = 
+    getTag("txt").addLine("Line added!")
 </script>
 </Container>
