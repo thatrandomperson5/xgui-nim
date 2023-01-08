@@ -33,7 +33,7 @@ import xgui/[nn, defaults], std/[tables]
 ##
 ## **Basic xml**
 ## 
-## .. code:: xml
+## .. code:: nim
 ##
 ##   <Window title="NiGui &amp; XGui Example">
 ##       <LayoutContainer>
