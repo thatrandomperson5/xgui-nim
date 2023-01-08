@@ -86,6 +86,8 @@ proc inferValue(v: string, name: string): NimNode =
       return newLit(v.parseInt)
     of 'S':
       return newLit(v)
+    of 'F':
+      return newLit(v.parseFloat)
     of 'D':
       return newIdentNode(v)
     else:
@@ -94,7 +96,10 @@ proc inferValue(v: string, name: string): NimNode =
     try:
       return newLit(v.parseInt)
     except ValueError:
-      return newLit(v)
+      try:
+        return newLit(v.parseFloat)
+      except ValueError:
+        return newLit(v)
 
 # ========================================================================================
 #

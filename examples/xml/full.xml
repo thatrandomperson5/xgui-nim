@@ -1,0 +1,29 @@
+<Window title="NiGui &amp; XGui Full control example">
+    <LayoutContainer>
+        <Button tag="button">
+            Button
+        </Button>
+        <Checkbox></Checkbox>
+        <ComboBox>
+            <script>
+                parent.options = @["Option 1", "Option 2"]
+            </script>
+        </ComboBox>
+        <l>Label</l>
+        <ProgressBar value="0.5"></ProgressBar>
+        <TextBox>TextBox</TextBox>
+        <TextArea tag="textArea">
+            TextArea
+            Line 2
+        </TextArea>
+        <script>
+            # Add more text to the TextArea:
+            for i in 3..15:
+                getTag("textArea").addLine("Line " &amp; $i)
+
+            # Add click event to the button
+            getTag("button").onClick = proc(event: ClickEvent) =
+                getTag("textArea").addLine("Button clicked")
+        </script>
+    </LayoutContainer>
+</Window>
