@@ -17,7 +17,7 @@
             Line 2
         </TextArea>
         <script>
-            # Add more text to the TextArea:
+            # Add more text to the TextArea
             for i in 3..15:
                 getTag("textArea").addLine("Line " &amp; $i)
 

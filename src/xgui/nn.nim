@@ -1,4 +1,4 @@
-import std/[xmltree, xmlparser, parsexml, macros, tables, strutils, strtabs]
+import std/[xmltree, xmlparser, parsexml, macros, tables, strutils, strtabs], xgui/utils
 
 var tags {.compileTime.} = initTable[string, NimNode]()
 
@@ -9,7 +9,8 @@ var tags {.compileTime.} = initTable[string, NimNode]()
 proc handleXml*(filename: string): XmlNode {.compileTime.} = 
   ## Compile-time xml parsing with `allowUnquotedAttribs` and `allowEmptyAttribs`
   
-  let xml = staticRead(filename)
+  var xml = staticRead(filename)
+  xml = xml.makeSafe()
   result = parseXml(xml, {allowUnquotedAttribs, allowEmptyAttribs})
 
 # ----------------------------------------------------------------------------------------
@@ -53,11 +54,16 @@ proc findTagCalls(obj: NimNode): NimNode =
     else:
       result.add findTagCalls(child)
 
+proc getText(node: XmlNode): string = 
+  for child in node:
+    if child.kind in {xnText, xnVerbatimText, xnEntity}:
+      result &= child.text   
 
 proc makeScript(node: XmlNode, parent: NimNode): NimNode =
   ## Make script tag internals. Provide the `parent` pointer
 
-  let txt = node[0].text
+  let txt = node.getText.deepStrip()
+  
   var nnodes = parseStmt(txt)
   let parentNode = newIdentNode("parent")
 
@@ -69,7 +75,7 @@ proc makeScript(node: XmlNode, parent: NimNode): NimNode =
   nnodes = nnodes.searchAndTransform(parentNode, newTree(nnkBracketExpr, parentNode))
   nnodes = nnodes.findTagCalls()
   result.add nnodes
-  result = newBlockStmt(result)
+  # result = newBlockStmt(result)
 
 proc inferValue(v: string, name: string): NimNode =
   ## Value inferation, like `"100"` will be turned into `100`
