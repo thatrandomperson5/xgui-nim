@@ -52,7 +52,37 @@ import xgui/[nn, defaults], std/[tables]
 ##
 ## ..
 ## 
-## The above produces this:
+## The basic example expands into this:
+##
+## .. code:: nim
+## 
+##  init(app)
+##  let w = block:
+##    let xguiElement_452984907 = newWindow("")
+##    title=(xguiElement_452984907, "NiGui & XGui Example")
+##    add(xguiElement_452984907, block:
+##      let xguiElement_452984912 = newLayoutContainer(Layout_Vertical)
+##      add(xguiElement_452984912, block:
+##        let xguiElement_452984913 = newButton("")
+##        text=(xguiElement_452984913, "Button 1")
+##        xguiElement_452984913)
+##      add(xguiElement_452984912, block:
+##        let xguiElement_452984920 = newTextArea("")
+##        xguiElement_452984920)
+##      block:
+##        let parent = unsafeAddr xguiElement_452984912
+##        onClick=(xguiElement_452984913, proc (event: ClickEvent) =
+##          addLine(xguiElement_452984920, "Button 1 clicked, message box opened.")
+##          alert(xguiElement_452984907, "This is a simple message box.", "Message")
+##          addLine(xguiElement_452984920, "Message box closed."))
+##      xguiElement_452984912)
+##    xguiElement_452984907
+##  width=(w, scaleToDpi(600))
+##  height=(w, scaleToDpi(400))
+##  show(w)
+##  run(app)
+## 
+## ..
 ##
 ##
 ## Special attributes
