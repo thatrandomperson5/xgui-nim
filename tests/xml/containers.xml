@@ -1,0 +1,34 @@
+<LayoutContainer>
+  <LayoutContainer XD-layout="Layout_Horizontal" XP-frame="newFrame(&quot;Row 1: Auto-sized&quot;)">
+    <Button>Button 1</Button>
+    <Button>Button 2</Button>
+    <Button>Button 3</Button>
+  </LayoutContainer>
+  <LayoutContainer XD-layout="Layout_Horizontal" padding="10" XP-frame="newFrame(&quot;Row 2: Auto-sized, more padding&quot;)">
+    <Button>Button 1</Button>
+    <Button>Button 2</Button>
+    <Button>Button 3</Button>
+  </LayoutContainer>
+  <LayoutContainer XD-layout="Layout_Horizontal" spacing="15" XP-frame="newFrame(&quot;Row 3: Auto-sized, more spacing&quot;)">
+    <Button>Button 1</Button>
+    <Button>Button 2</Button>
+    <Button>Button 3</Button>
+  </LayoutContainer>
+  <LayoutContainer XD-layout="Layout_Horizontal" XP-frame="newFrame(&quot;Row 4: Controls expanded&quot;)">
+    <Button XD-widthMode="WidthMode_Expand">Button 1</Button>
+    <Button XD-widthMode="WidthMode_Expand">Button 2</Button>
+    <Button XD-widthMode="WidthMode_Expand">Button 3</Button>
+  </LayoutContainer>
+  <LayoutContainer 
+    XD-widthMode="WidthMode_Expand"
+    height="80"
+    XD-xAlign="XAlign_Center"
+    XD-yAlign="YAlign_Center"
+    XD-layout="Layout_Horizontal" 
+    XP-frame="newFrame(&quot;Row 5: Controls centered&quot;)"
+    >
+    <Button>Button 1</Button>
+    <Button>Button 2</Button>
+    <Button>Button 3</Button>
+  </LayoutContainer>
+</LayoutContainer>

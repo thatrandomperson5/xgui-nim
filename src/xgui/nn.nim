@@ -114,12 +114,9 @@ proc inferValue(v: string, name: string): NimNode =
       raise newException(ValueError, "Invalid inferation type.")
   else:
     try:
-      return newLit(v.parseInt)
+      return parseExpr(v)
     except ValueError:
-      try:
-        return newLit(v.parseFloat)
-      except ValueError:
-        return newLit(v)
+      return newLit(v)
 
 # ========================================================================================
 #
