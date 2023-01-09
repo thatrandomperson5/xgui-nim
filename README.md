@@ -1,5 +1,10 @@
 # xgui-nim
 XGui is a tool for [nigui](https://github.com/simonkrauter/NiGui) that imports xml files and turns them into nim at compile-time.
+
+You can install it using the command below:
+```
+nimble install https://github.com/thatrandomperson5/xgui-nim.git
+```
 # Examples
 These examples are all the equivalent from [nigui exmaples](https://github.com/simonkrauter/NiGui/tree/master/examples)
 * [basic app (1)](https://github.com/thatrandomperson5/xgui-nim/blob/main/examples/basic_example.nim) | [xml](https://github.com/thatrandomperson5/xgui-nim/blob/main/examples/xml/basic.xml)
