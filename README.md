@@ -10,6 +10,14 @@ These examples are all the equivalent from [nigui exmaples](https://github.com/s
 * [basic app (1)](https://github.com/thatrandomperson5/xgui-nim/blob/main/examples/basic_example.nim) | [xml](https://github.com/thatrandomperson5/xgui-nim/blob/main/examples/xml/basic.xml)
 * [controls (2)](https://github.com/thatrandomperson5/xgui-nim/blob/main/examples/full_example.nim) | [xml](https://github.com/thatrandomperson5/xgui-nim/blob/main/examples/xml/full.xml)
 
+# Running tests
+Run the comannds below
+```
+git clone https://github.com/thatrandomperson5/xgui-nim.git
+cd xgui-nim
+nimble test
+```
+
 # Docs
 The docs are here: [thatrandomperson5.github.io/xgui-nim](https://thatrandomperson5.github.io/xgui-nim)
 # XGui-specific features
