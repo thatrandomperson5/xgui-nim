@@ -113,6 +113,8 @@ proc inferValue(v: string, name: string): NimNode =
     else:
       raise newException(ValueError, "Invalid inferation type.")
   else:
+    if ' ' in v:
+      return newLit(v)
     try:
       return parseExpr(v)
     except ValueError:
