@@ -16,3 +16,5 @@ The docs are here: [thatrandomperson5.github.io/xgui-nim](https://thatrandompers
 * Parent pointer, points to the parent of the script tag
 * Tags, allow flagging and finding of elements
 * Border-crossing with the link tag
+# Future
+Add more exmaples
