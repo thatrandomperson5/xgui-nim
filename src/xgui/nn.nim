@@ -96,6 +96,8 @@ proc inferValue(v: string, name: string): NimNode =
       return newLit(v.parseFloat)
     of 'D':
       return newIdentNode(v)
+    of 'P': # Parse
+      return parseExpr(v)
     else:
       raise newException(ValueError, "Invalid inferation type.")
   else:

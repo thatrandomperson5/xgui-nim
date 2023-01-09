@@ -4,11 +4,7 @@
             Button
         </Button>
         <Checkbox></Checkbox>
-        <ComboBox>
-            <script>
-                parent.options = @["Option 1", "Option 2"]
-            </script>
-        </ComboBox>
+        <ComboBox XP-options="@[&quot;Option 1&quot;, &quot;Option 2&quot;]"></ComboBox>
         <l>Label</l>
         <ProgressBar value="0.5"></ProgressBar>
         <TextBox>TextBox</TextBox>
