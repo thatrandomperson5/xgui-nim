@@ -1,4 +1,4 @@
-import std/[xmltree, xmlparser, parsexml, macros, tables, strutils, strtabs], xgui/utils
+import std/[xmltree, xmlparser, parsexml, macros, tables, strutils, strtabs], utils
 
 var tags {.compileTime.} = initTable[string, NimNode]()
 
