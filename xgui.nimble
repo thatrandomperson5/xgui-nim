@@ -7,6 +7,7 @@ srcDir = "src"
 
 requires "nigui"
 requires "nim >= 1.2.2"
+requires "regex"
 
 
 task test, "Test xgui":

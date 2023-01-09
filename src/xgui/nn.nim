@@ -1,4 +1,4 @@
-import std/[xmltree, xmlparser, parsexml, macros, tables, strutils, strtabs], utils
+import std/[xmltree, xmlparser, parsexml, macros, tables, strutils, strtabs], utils, strict
 
 var tags {.compileTime.} = initTable[string, NimNode]()
 
@@ -113,7 +113,7 @@ proc inferValue(v: string, name: string): NimNode =
     else:
       raise newException(ValueError, "Invalid inferation type.")
   else:
-    if ' ' in v:
+    if not v.isStrict:
       return newLit(v)
     try:
       return parseExpr(v)

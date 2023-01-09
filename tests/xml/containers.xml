@@ -1,20 +1,20 @@
 <LayoutContainer>
-  <LayoutContainer layout="Layout_Horizontal" XP-frame="newFrame(&quot;Row 1: Auto-sized&quot;)">
+  <LayoutContainer layout="Layout_Horizontal" frame="newFrame(&quot;Row 1: Auto-sized&quot;)">
     <Button>Button 1</Button>
     <Button>Button 2</Button>
     <Button>Button 3</Button>
   </LayoutContainer>
-  <LayoutContainer layout="Layout_Horizontal" padding="10" XP-frame="newFrame(&quot;Row 2: Auto-sized, more padding&quot;)">
+  <LayoutContainer layout="Layout_Horizontal" padding="10" frame="newFrame(&quot;Row 2: Auto-sized, more padding&quot;)">
     <Button>Button 1</Button>
     <Button>Button 2</Button>
     <Button>Button 3</Button>
   </LayoutContainer>
-  <LayoutContainer layout="Layout_Horizontal" spacing="15" XP-frame="newFrame(&quot;Row 3: Auto-sized, more spacing&quot;)">
+  <LayoutContainer layout="Layout_Horizontal" spacing="15" frame="newFrame(&quot;Row 3: Auto-sized, more spacing&quot;)">
     <Button>Button 1</Button>
     <Button>Button 2</Button>
     <Button>Button 3</Button>
   </LayoutContainer>
-  <LayoutContainer layout="Layout_Horizontal" XP-frame="newFrame(&quot;Row 4: Controls expanded&quot;)">
+  <LayoutContainer layout="Layout_Horizontal" frame="newFrame(&quot;Row 4: Controls expanded&quot;)">
     <Button widthMode="WidthMode_Expand">Button 1</Button>
     <Button widthMode="WidthMode_Expand">Button 2</Button>
     <Button widthMode="WidthMode_Expand">Button 3</Button>
@@ -25,7 +25,7 @@
     xAlign="XAlign_Center"
     yAlign="YAlign_Center"
     layout="Layout_Horizontal" 
-    XP-frame="newFrame(&quot;Row 5: Controls centered&quot;)"
+    frame="newFrame(&quot;Row 5: Controls centered&quot;)"
     >
     <Button>Button 1</Button>
     <Button>Button 2</Button>
