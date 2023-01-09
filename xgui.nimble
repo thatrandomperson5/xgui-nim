@@ -1,6 +1,6 @@
-version     = "0.0.0"
-author      = "Your name"
-description = "Description of your library"
+version     = "0.1.0"
+author      = "thatrandomperson5"
+description = "XGui is a tool for nigui that imports xml files and turns them into nim at compile-time."
 license     = "MIT"
 
 srcDir = "src"
