@@ -91,6 +91,7 @@ import xgui/[nn, defaults], std/[tables]
 ## - `XI-` forces int.
 ## - `XS-` forces string.
 ## - `XD-` forces ident.
+## - `XP-` parses a valid nim expression
 ## 
 ## Special Tags
 ## ==============
