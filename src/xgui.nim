@@ -1,4 +1,7 @@
 import xgui/[nn, defaults, utils], std/[tables]
+when defined(xguiTrace):
+  import terminaltables
+
 ## =====
 ## XGui
 ## =====
@@ -97,7 +100,7 @@ import xgui/[nn, defaults, utils], std/[tables]
 ## ==============
 ## - `link` replaces the link tah with the contents of a file linked with `ref=`
 ## - `script` write nim in xml, special `parent` let returns the parent of the script tag's obj
-##
+
 
 
 const defaultConfig*: XGuiConfig = (true, true)
@@ -107,7 +110,15 @@ const xmlAliases* = {"l": "Label"}.toTable
 macro loadGui*(filename: static[string], aliases: static[Table[string, string]], config: static[XGuiConfig]): untyped = 
   ## Loads an xml gui, returns the top ui object, so make sure to catch or discard it
   
-  result = handleXml(filename).buildBlock(aliases, config)
+  when defined(xguiTrace):
+    try:
+      result = handleXml(filename).buildBlock(aliases, config)
+      echo result.repr
+    finally:
+      echo "\nPrinting trace: "
+      mainTable.printTable()
+  else:
+    result = handleXml(filename).buildBlock(aliases, config)
 
 template loadGui*(filename: static[string]): untyped = loadGui(fileName, xmlAliases, defaultConfig)
   ## Template becuase of compile-time defaults bug

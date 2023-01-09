@@ -24,5 +24,8 @@ The docs are here: [thatrandomperson5.github.io/xgui-nim](https://thatrandompers
 * Parent pointer, points to the parent of the script tag
 * Tags, allow flagging and finding of elements
 * Border-crossing with the link tag
+# Tracing
+I know becuase of compile time and remote code and other factors, the tracbacks can be really confusing, so i made a tool.
+Just run `nimble xgui installDebug` and compile with `-d:xguiTrace`, the expanded code will be dumped along with a trace table. (Expanded code is not easy on the eyes)
 # Future
 Add more exmaples

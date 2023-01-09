@@ -1,5 +1,14 @@
 import std/[xmltree, xmlparser, parsexml, macros, tables, strutils, strtabs], utils, strict
 
+when defined(xguiTrace):
+  import terminaltables, strformat
+  var xmlDepth {.compileTime.} = 0
+  var mainTable* {.compileTime.} = newTerminalTable()
+  static:
+    mainTable.separateRows = false
+    mainTable.setHeaders(@["Tag", "Tag-Flags", "Attrs"])
+
+
 var tags {.compileTime.} = initTable[string, NimNode]()
 
 # ----------------------------------------------------------------------------------------
@@ -155,6 +164,8 @@ template childHandler(): untyped =
 
 proc buildBlock(node: XmlNode, aliases: Table[string, string], config: XGuiConfig): NimNode = 
   ## Builds xml into block stmts
+
+
   result = newStmtList()
   let nameSym = genSym(ident="xguiElement")
   var procname: string = node.tag
@@ -166,18 +177,34 @@ proc buildBlock(node: XmlNode, aliases: Table[string, string], config: XGuiConfi
   result.add newLetStmt(nameSym, newCall(
     newIdentNode("new" & procname)
   ))
+
+  when defined(xguiTrace):
+    var ttags = newSeq[string](0)
+    var tattributes = newSeq[string](0)
+
   if not node.attrs.isNil:
     for key, value in node.attrs:
       var realKey = key
       if realKey == "tag":
         tags[value] = nameSym
+        when defined(xguiTrace):
+          ttags.add value
         continue
       if key.startswith("X"):
         realKey = key[3..^1]
+      let v = inferValue(value, key)
+      when defined(xguiTrace):
+        tattributes.add fmt"{key}: {v.repr}"
       result.add newAssignment(
-        newDotExpr(nameSym, newIdentNode(realKey)),
-        inferValue(value, key)
+        newDotExpr(nameSym, newIdentNode(realKey)), v
       )
+  when defined(xguiTrace):
+    var padding = ""
+    for _ in 0..xmlDepth*2:
+      padding &= " "
+    mainTable.addRow(@[fmt"{padding}<{node.tag} />", ttags.join(", "), tattributes.join(", ")])
+    xmlDepth += 1
+
   var txt = ""
   childHandler()
   let strpText = txt.strip()
@@ -188,3 +215,5 @@ proc buildBlock(node: XmlNode, aliases: Table[string, string], config: XGuiConfi
     )
   result.add nameSym
   result = newBlockStmt(result)
+  when defined(xguiTrace):
+    xmlDepth -= 1
