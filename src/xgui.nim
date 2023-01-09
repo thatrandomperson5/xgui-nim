@@ -99,14 +99,21 @@ import xgui/[nn, defaults], std/[tables]
 ## - `script` write nim in xml, special `parent` let returns the parent of the script tag's obj
 ##
 
+type XGuiConfig = tuple[
+  useAtBangs: bool,
+  usePtrParents: bool
+]
+
+const defaultConfig*: XGuiConfig = (true, true)
 
 const xmlAliases* = {"l": "Label"}.toTable
   
-macro loadGui*(filename: static[string], aliases: static[Table[string, string]]): untyped = 
+macro loadGui*(filename: static[string], aliases: static[Table[string, string]], config: static[XGuiConfig]): untyped = 
   ## Loads an xml gui, returns the top ui object, so make sure to catch or discard it
   
   result = handleXml(filename).buildBlock(aliases)
-template loadGui*(filename: static[string]): untyped = loadGui(fileName, xmlAliases)
+
+template loadGui*(filename: static[string]): untyped = loadGui(fileName, xmlAliases, defaultConfig)
   ## Template becuase of compile-time defaults bug
 
 
