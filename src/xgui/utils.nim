@@ -1,5 +1,12 @@
 import std/[strutils]
 
+
+type XGuiConfig* = tuple[
+  useAtBangs: bool,
+  usePtrParents: bool
+]
+
+
 proc makeSafe*(xml: string): string =
   result = xml.replace("<script>", "<script>@#")
 

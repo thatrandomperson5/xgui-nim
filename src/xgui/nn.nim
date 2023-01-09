@@ -17,18 +17,18 @@ proc handleXml*(filename: string): XmlNode {.compileTime.} =
 #                                     Forwards
 # ----------------------------------------------------------------------------------------
 
-proc buildBlock*(node: XmlNode, aliases: Table[string, string]): NimNode
+proc buildBlock*(node: XmlNode, aliases: Table[string, string], config: XGuiConfig): NimNode
 
 # ----------------------------------------------------------------------------------------
 #                                    Utils
 # ----------------------------------------------------------------------------------------
 
-proc makeLink(node: XmlNode, al: Table[string, string]): NimNode =
+proc makeLink(node: XmlNode, al: Table[string, string], config: XGuiConfig): NimNode =
   ## Link two xgui xml files using `link` tag with `ref` attribute
 
   if "ref" in node.attrs:
 
-    result = handleXml(node.attrs["ref"]).buildBlock(al)
+    result = handleXml(node.attrs["ref"]).buildBlock(al, config)
   else:
     raise newException(ValueError, "Link node must have ref")
 
@@ -43,7 +43,7 @@ proc searchAndTransform(obj: NimNode, f: NimNode, r: NimNode): NimNode =
     else:
       result.add searchAndTransform(child, f, r)
 
-proc findTagCalls(obj: NimNode): NimNode =
+proc findTagCalls(obj: NimNode, config: XGuiConfig): NimNode =
   if obj.len < 1:
     return obj
   result = newNimNode(obj.kind)
@@ -51,29 +51,41 @@ proc findTagCalls(obj: NimNode): NimNode =
     if child.kind == nnkCall and child[0] == newIdentNode("getTag"):
       expectKind(child[1], nnkStrLit)
       result.add tags[child[1].strVal]
+    elif config.useAtBangs and child.kind == nnkPrefix and child[0] == newIdentNode("@!"):
+      expectKind(child[1], {nnkIdent, nnkPar})
+      if child[1].kind == nnkPar:
+        expectKind(child[1][0], nnkIdent)
+        result.add tags[child[1][0].strVal]
+      else:
+        result.add tags[child[1].strVal]
+     
     else:
-      result.add findTagCalls(child)
+      result.add findTagCalls(child, config)
 
 proc getText(node: XmlNode): string = 
   for child in node:
     if child.kind in {xnText, xnVerbatimText, xnEntity}:
       result &= child.text   
 
-proc makeScript(node: XmlNode, parent: NimNode): NimNode =
+proc makeScript(node: XmlNode, parent: NimNode, config: XGuiConfig): NimNode =
   ## Make script tag internals. Provide the `parent` pointer
 
   let txt = node.getText.deepStrip()
   
   var nnodes = parseStmt(txt)
   let parentNode = newIdentNode("parent")
-
+  
   result = newStmtList()
-  result.add newLetStmt(
-    parentNode,
-    newTree(nnkCommand, newIdentNode("unsafeAddr"), parent)
-  )
-  nnodes = nnodes.searchAndTransform(parentNode, newTree(nnkBracketExpr, parentNode))
-  nnodes = nnodes.findTagCalls()
+  if config.usePtrParents:
+    result.add newLetStmt(
+      parentNode,
+      newTree(nnkCommand, newIdentNode("unsafeAddr"), parent)
+    )
+    nnodes = nnodes.searchAndTransform(parentNode, newTree(nnkBracketExpr, parentNode))
+  else:
+    nnodes = nnodes.searchAndTransform(parentNode, parent)
+
+  nnodes = nnodes.findTagCalls(config)
   result.add nnodes
   result = newBlockStmt(result)
 
@@ -131,18 +143,18 @@ template childHandler(): untyped =
       result.add newCall(
         newIdentNode("add"), 
         nameSym,
-        makeLink(child, aliases)
+        makeLink(child, aliases, config)
       ) 
     of "script":
-      result.add makeScript(child, nameSym)
+      result.add makeScript(child, nameSym, config)
     else:
       result.add newCall(
         newIdentNode("add"), 
         nameSym,
-        buildBlock(child, aliases)
+        buildBlock(child, aliases, config)
       )
 
-proc buildBlock(node: XmlNode, aliases: Table[string, string]): NimNode = 
+proc buildBlock(node: XmlNode, aliases: Table[string, string], config: XGuiConfig): NimNode = 
   ## Builds xml into block stmts
   result = newStmtList()
   let nameSym = genSym(ident="xguiElement")

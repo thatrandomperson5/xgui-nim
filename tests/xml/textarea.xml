@@ -13,7 +13,7 @@
   Add line
 </Button>
 <script>
-  getTag("thebutton").onClick = proc(e: ClickEvent) = 
-    getTag("txt").addLine("Line added!")
+  @!(thebutton).onClick = proc(e: ClickEvent) = 
+    @!(txt).addLine("Line added!")
 </script>
 </Container>

@@ -1,4 +1,4 @@
-import xgui/[nn, defaults], std/[tables]
+import xgui/[nn, defaults, utils], std/[tables]
 ## =====
 ## XGui
 ## =====
@@ -9,7 +9,7 @@ import xgui/[nn, defaults], std/[tables]
 ## - The tag name is the type, eg `Button`, `LayoutContainer`
 ## - The attributes are the fields on the object
 ## - The text is an alias for the `text` field.
-## - Tags are declared with the `tag` attribute and are found using the `getTag()` call
+## - Tags are declared with the `tag` attribute and are found using the `getTag()` call or `@!<name>` 
 ##
 ## Examples
 ## =========
@@ -99,10 +99,6 @@ import xgui/[nn, defaults], std/[tables]
 ## - `script` write nim in xml, special `parent` let returns the parent of the script tag's obj
 ##
 
-type XGuiConfig = tuple[
-  useAtBangs: bool,
-  usePtrParents: bool
-]
 
 const defaultConfig*: XGuiConfig = (true, true)
 
@@ -111,10 +107,11 @@ const xmlAliases* = {"l": "Label"}.toTable
 macro loadGui*(filename: static[string], aliases: static[Table[string, string]], config: static[XGuiConfig]): untyped = 
   ## Loads an xml gui, returns the top ui object, so make sure to catch or discard it
   
-  result = handleXml(filename).buildBlock(aliases)
+  result = handleXml(filename).buildBlock(aliases, config)
 
 template loadGui*(filename: static[string]): untyped = loadGui(fileName, xmlAliases, defaultConfig)
   ## Template becuase of compile-time defaults bug
 
 
-export defaults
+export defaults, XGuiConfig
+
