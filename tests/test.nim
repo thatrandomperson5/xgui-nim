@@ -1,5 +1,5 @@
 
-import xgui, nigui, macros, os
+import xgui, nigui
 
 #app.init()
 
