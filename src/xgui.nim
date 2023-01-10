@@ -1,4 +1,4 @@
-import xgui/[nn, defaults, utils], std/[tables]
+import xgui/[nn, defaults, utils], std/[tables, os]
 when defined(xguiTrace):
   import terminaltables
 
@@ -112,7 +112,7 @@ macro loadGui*(filename: static[string], aliases: static[Table[string, string]],
   
   when defined(xguiTrace):
     try:
-      result = handleXml(filename).buildBlock(aliases, config)
+      result = handleXml(absolutePath(filename, getProjectPath())).buildBlock(aliases, config)
       echo result.repr
     finally:
       echo "\nPrinting trace: "
