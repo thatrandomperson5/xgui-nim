@@ -1,8 +1,6 @@
 <Window title="NiGui &amp; XGui Full control example">
     <LayoutContainer>
-        <Button tag="button">
-            Button
-        </Button>
+        <Button tag="button">Button</Button>
         <Checkbox></Checkbox>
         <ComboBox XP-options="@[&quot;Option 1&quot;, &quot;Option 2&quot;]"></ComboBox>
         <l>Label</l>
