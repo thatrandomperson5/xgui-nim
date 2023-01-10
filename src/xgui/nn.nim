@@ -207,7 +207,7 @@ proc buildBlock(node: XmlNode, aliases: Table[string, string], config: XGuiConfi
 
   var txt = ""
   childHandler()
-  let strpText = txt.strip().replace("\n", "\p")
+  let strpText = txt.deepStrip().replace("\n", "\p")
   if strpText != "":
     result.add newAssignment(
       newDotExpr(nameSym, newIdentNode("text")),
