@@ -1,8 +1,10 @@
 
 import xgui, nigui
 
-#app.init()
+app.init()
 
-let jsn = loadGui("xml/test.xml")
+let w = loadGui("xml/test.xml")
+w.show()
 
-#app.run()
+app.run()
+

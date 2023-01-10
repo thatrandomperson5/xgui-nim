@@ -1,9 +1,9 @@
 <Window title="xgui w/ nigui" width=100>
-  <LayoutContainer layout="Layout_Horizontal">
-      <h>Hello world</h>
-      <h2>Smaller</h2>
-      <b>Bold</b>
-      <link ref="xml/textarea.xml" />
+  <LayoutContainer>
+    <h>Hello world</h>
+    <h2>Smaller</h2>
+    <b>Bold</b>
+    <link ref="xml/textarea.xml" />
+    <link ref="xml/containers.xml" />
   </LayoutContainer>
-  <link ref="xml/containers.xml" />
 </Window>

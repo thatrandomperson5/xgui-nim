@@ -1,4 +1,4 @@
-<Container>
+<LayoutContainer>
 <TextArea tag="txt">
   Lorem ipsum dolor sit amet, 
   consectetur adipiscing elit, 
@@ -16,4 +16,4 @@
   @!(thebutton).onClick = proc(e: ClickEvent) = 
     @!(txt).addLine("Line added!")
 </script>
-</Container>
+</LayoutContainer>
