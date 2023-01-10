@@ -1,8 +1,6 @@
 <Window title="NiGui &amp; XGui Example">
   <LayoutContainer>
-    <Button tag="btn">
-      Button 1
-    </Button>
+    <Button tag="btn">Button 1</Button>
     <TextArea tag="txt"></TextArea>
     <script>
       @!(btn).onClick = proc (event: ClickEvent) = # Get the button obj and add an event callback
