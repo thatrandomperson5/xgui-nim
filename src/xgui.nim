@@ -1,4 +1,4 @@
-import xgui/[nn, defaults, utils], std/[tables, os]
+import xgui/[nn, defaults, utils], std/[tables, os, macros]
 when defined(xguiTrace):
   import terminaltables
 
@@ -118,7 +118,7 @@ macro loadGui*(filename: static[string], aliases: static[Table[string, string]],
       echo "\nPrinting trace: "
       mainTable.printTable()
   else:
-    result = handleXml(filename).buildBlock(aliases, config)
+    result = handleXml(absolutePath(filename, getProjectPath())).buildBlock(aliases, config)
 
 template loadGui*(filename: static[string]): untyped = loadGui(fileName, xmlAliases, defaultConfig)
   ## Template becuase of compile-time defaults bug
