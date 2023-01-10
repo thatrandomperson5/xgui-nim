@@ -103,7 +103,7 @@ when defined(xguiTrace):
 
 
 
-const defaultConfig*: XGuiConfig = (true, true)
+const defaultConfig*: XGuiConfig = (true, true, getProjectPath())
 
 const xmlAliases* = {"l": "Label"}.toTable
   
@@ -112,13 +112,13 @@ macro loadGui*(filename: static[string], aliases: static[Table[string, string]],
   
   when defined(xguiTrace):
     try:
-      result = handleXml(absolutePath(filename, getProjectPath())).buildBlock(aliases, config)
+      result = handleXml(absolutePath(filename, config.xmlPath)).buildBlock(aliases, config)
       echo result.repr
     finally:
       echo "\nPrinting trace: "
       mainTable.printTable()
   else:
-    result = handleXml(absolutePath(filename, getProjectPath())).buildBlock(aliases, config)
+    result = handleXml(absolutePath(filename, config.xmlPath)).buildBlock(aliases, config)
 
 template loadGui*(filename: static[string]): untyped = loadGui(fileName, xmlAliases, defaultConfig)
   ## Template becuase of compile-time defaults bug

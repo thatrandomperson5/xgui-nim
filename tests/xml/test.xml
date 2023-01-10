@@ -1,7 +1,7 @@
 <Window title="xgui w/ nigui" width=100>
   <LayoutContainer layout="Layout_Horizontal">
       <l>Hello world</l>
-      <link ref="textarea.xml" />
+      <link ref="xml/textarea.xml" />
   </LayoutContainer>
-  <link ref="containers.xml" />
+  <link ref="xml/containers.xml" />
 </Window>

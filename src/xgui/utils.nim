@@ -4,6 +4,7 @@ import std/[strutils]
 type XGuiConfig* = tuple[
   useAtBangs: bool,
   usePtrParents: bool,
+  xmlPath: string
 ]
 
 

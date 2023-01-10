@@ -1,4 +1,4 @@
-import std/[xmltree, xmlparser, parsexml, macros, tables, strutils, strtabs], utils, strict
+import std/[xmltree, xmlparser, parsexml, macros, tables, strutils, strtabs, os], utils, strict
 
 when defined(xguiTrace):
   import terminaltables, strformat
@@ -37,7 +37,9 @@ proc makeLink(node: XmlNode, al: Table[string, string], config: XGuiConfig): Nim
 
   if "ref" in node.attrs:
 
-    result = handleXml(node.attrs["ref"]).buildBlock(al, config)
+    result = handleXml(
+      node.attrs["ref"].absolutePath(config.xmlPath)
+    ).buildBlock(al, config)
   else:
     raise newException(ValueError, "Link node must have ref")
 
@@ -78,6 +80,11 @@ proc getText(node: XmlNode): string =
 
 proc makeScript(node: XmlNode, parent: NimNode, config: XGuiConfig): NimNode =
   ## Make script tag internals. Provide the `parent` pointer
+  when defined(xguiTrace):
+    var padding = ""
+    for _ in 0..xmlDepth*2:
+      padding &= " "
+    mainTable.addRow(@[fmt"{padding}<script />", "!script", ""])
 
   let txt = node.getText.deepStrip()
   
