@@ -1,4 +1,2 @@
 --path:"../src"
---path:"./xml"
---path:"."
 --define:xguiTrace

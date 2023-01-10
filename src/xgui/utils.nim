@@ -3,7 +3,7 @@ import std/[strutils]
 
 type XGuiConfig* = tuple[
   useAtBangs: bool,
-  usePtrParents: bool
+  usePtrParents: bool,
 ]
 
 

@@ -3,6 +3,6 @@ import xgui, nigui
 
 #app.init()
 
-let jsn = loadGui("test.xml")
+let jsn = loadGui("xml/test.xml")
 
 #app.run()
