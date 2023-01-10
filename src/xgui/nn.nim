@@ -34,6 +34,10 @@ proc buildBlock*(node: XmlNode, aliases: Table[string, string], config: XGuiConf
 
 proc makeLink(node: XmlNode, al: Table[string, string], config: XGuiConfig): NimNode =
   ## Link two xgui xml files using `link` tag with `ref` attribute
+  when defined(xguiTrace):
+    let xmllvl = xmlDepth
+    mainTable.addRow(@["<link>", fmt"!link, level={xmlDepth}", node.attrs["ref"]])
+    xmlDepth = 0
 
   if "ref" in node.attrs:
 
@@ -42,6 +46,9 @@ proc makeLink(node: XmlNode, al: Table[string, string], config: XGuiConfig): Nim
     ).buildBlock(al, config)
   else:
     raise newException(ValueError, "Link node must have ref")
+  when defined(xguiTrace):
+    mainTable.addRow(@["<link/>", fmt"!link, level={xmllvl}", ""])
+    xmlDepth = xmllvl
 
 proc searchAndTransform(obj: NimNode, f: NimNode, r: NimNode): NimNode =
   ## Search and transform `f` for `r` in `obj`
@@ -199,6 +206,15 @@ proc buildBlock(node: XmlNode, aliases: Table[string, string], config: XGuiConfi
         continue
       if key.startswith("X"):
         realKey = key[3..^1]
+      if value == "":
+        result.add newAssignment(
+          newDotExpr(nameSym, newIdentNode(realKey)), 
+          newTree(nnkPrefix, newIdentNode("not"), 
+            newDotExpr(nameSym, newIdentNode(realKey))
+          )
+        )
+        continue
+
       let v = inferValue(value, key)
       when defined(xguiTrace):
         tattributes.add fmt"{key}: {v.repr}"

@@ -26,7 +26,7 @@
     yAlign="YAlign_Center"
     layout="Layout_Horizontal" 
     frame="newFrame(&quot;Row 5: Controls centered&quot;)"
-    >
+  >
     <Button>Button 1</Button>
     <Button>Button 2</Button>
     <Button>Button 3</Button>
