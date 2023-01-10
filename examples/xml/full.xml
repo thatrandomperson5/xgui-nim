@@ -8,7 +8,7 @@
         <l>Label</l>
         <ProgressBar value="0.5"></ProgressBar>
         <TextBox>TextBox</TextBox>
-        <TextArea tag="textArea">
+        <TextArea tag="textArea">@#
             TextArea
             Line 2
         </TextArea>
