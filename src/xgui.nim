@@ -105,7 +105,12 @@ when defined(xguiTrace):
 
 const defaultConfig*: XGuiConfig = (true, true, getProjectPath())
 
-const xmlAliases* = {"l": "Label"}.toTable
+const xmlAliases* = {
+  "l": "Label",
+  "h": "Header",
+  "h2": "SubHeader",
+  "b": "Bold"
+}.toTable
   
 macro loadGui*(filename: static[string], aliases: static[Table[string, string]], config: static[XGuiConfig]): untyped = 
   ## Loads an xml gui, returns the top ui object, so make sure to catch or discard it

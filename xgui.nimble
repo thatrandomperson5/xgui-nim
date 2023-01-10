@@ -5,9 +5,9 @@ license     = "MIT"
 
 srcDir = "src"
 
-requires "nigui"
+requires "nigui >= 0.2.6"
 requires "nim >= 1.2.2"
-requires "regex"
+requires "regex >= 0.20.1"
 
 
 task test, "Test xgui":
