@@ -153,7 +153,7 @@ proc inferValue(v: string, name: string): NimNode =
 template childHandler(): untyped = 
   for child in node:
     case child.kind
-    of xnText:
+    of xnText, xnVerbatimText, xnEntity:
       txt &= child.text
       continue
     of xnElement:
