@@ -80,10 +80,15 @@ proc findTagCalls(obj: NimNode, config: XGuiConfig): NimNode =
     else:
       result.add findTagCalls(child, config)
 
-proc getText(node: XmlNode): string = 
-  for child in node:
-    if child.kind in {xnText, xnVerbatimText, xnEntity}:
-      result &= child.text   
+proc getText(node: XmlNode): string = node.innerText
+  # for child in node:
+  #   case child.kind 
+  #   of xnText, xnVerbatimText:
+  #     result &= child.text   
+  #   of xnEntity:
+  #     result &= $child
+  #   else:
+  #     discard
 
 proc makeScript(node: XmlNode, parent: NimNode, config: XGuiConfig): NimNode =
   ## Make script tag internals. Provide the `parent` pointer
@@ -156,6 +161,7 @@ template childHandler(): untyped =
     of xnText, xnVerbatimText, xnEntity:
       txt &= child.text
       continue
+
     of xnElement:
       discard
     else:

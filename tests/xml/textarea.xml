@@ -10,7 +10,7 @@
   sunt in culpa qui officia deserunt mollit anim id est laborum.
 </TextArea>
 <Button tag="thebutton">
-  Add line
+  Add line &times;
 </Button>
 <script>
   @!(thebutton).onClick = proc(e: ClickEvent) = 
