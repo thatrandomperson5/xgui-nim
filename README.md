@@ -1,4 +1,7 @@
 # xgui-nim
+[![nimble](https://raw.githubusercontent.com/yglukhov/nimble-tag/master/nimble.png)](https://github.com/yglukhov/nimble-tag)
+[![Build Status](https://nimble.directory/ci/badges/xgui/nimdevel/status.svg)](https://nimble.directory/ci/badges/jester/nimdevel/output.html)
+
 XGui is a tool for [nigui](https://github.com/simonkrauter/NiGui) that imports xml files and turns them into nim at compile-time.
 
 You can install it using the command below:
