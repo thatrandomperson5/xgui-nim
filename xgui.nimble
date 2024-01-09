@@ -6,7 +6,7 @@ license     = "MIT"
 srcDir = "src"
 
 requires "nigui >= 0.2.6"
-requires "nim >= 1.2.2"
+requires "nim >= 1.2.2 & < 2.0.0"
 requires "regex >= 0.20.1"
 
 
