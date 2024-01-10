@@ -34,7 +34,7 @@ jobs:
       - name: setup nim
         uses: jiro4989/setup-nim-action@v1
         with:
-          nim-version: '1.6.0'
+          nim-version: '2.0.0'
       - run: nimble install --depsOnly -y
       - name: gen docs
         run: sh docs.sh
