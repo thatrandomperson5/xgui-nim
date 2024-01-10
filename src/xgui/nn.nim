@@ -26,13 +26,13 @@ proc handleXml*(filename: string): XmlNode {.compileTime.} =
 #                                     Forwards
 # ----------------------------------------------------------------------------------------
 
-proc buildBlock*(node: XmlNode, aliases: Table[string, string], config: XGuiConfig): NimNode
+proc buildBlock*(node: XmlNode, aliases: Table[string, string], config: XGuiConfig, parentSym: NimNode): NimNode
 
 # ----------------------------------------------------------------------------------------
 #                                    Utils
 # ----------------------------------------------------------------------------------------
 
-proc makeLink(node: XmlNode, al: Table[string, string], config: XGuiConfig): NimNode =
+proc makeLink(node: XmlNode, al: Table[string, string], config: XGuiConfig, parentSym: NimNode): NimNode =
   ## Link two xgui xml files using `link` tag with `ref` attribute
   when defined(xguiTrace):
     let xmllvl = xmlDepth
@@ -43,7 +43,7 @@ proc makeLink(node: XmlNode, al: Table[string, string], config: XGuiConfig): Nim
 
     result = handleXml(
       node.attrs["ref"].absolutePath(config.xmlPath)
-    ).buildBlock(al, config)
+    ).buildBlock(al, config, parentSym)
   else:
     raise newException(ValueError, "Link node must have ref")
   when defined(xguiTrace):
@@ -168,21 +168,23 @@ template childHandler(): untyped =
       continue
     case child.tag:
     of "link":
-      result.add newCall(
+      result.add makeLink(child, aliases, config, nameSym)
+      #[result.add newCall(
         newIdentNode("add"), 
         nameSym,
         makeLink(child, aliases, config)
-      ) 
+      )]#
     of "script":
       result.add makeScript(child, nameSym, config)
     else:
-      result.add newCall(
+      result.add buildBlock(child, aliases, config, nameSym)
+      #[result.add newCall(
         newIdentNode("add"), 
         nameSym,
         buildBlock(child, aliases, config)
-      )
+      )]#
 
-proc buildBlock(node: XmlNode, aliases: Table[string, string], config: XGuiConfig): NimNode = 
+proc buildBlock(node: XmlNode, aliases: Table[string, string], config: XGuiConfig, parentSym: NimNode): NimNode = 
   ## Builds xml into block stmts
 
 
@@ -193,10 +195,6 @@ proc buildBlock(node: XmlNode, aliases: Table[string, string], config: XGuiConfi
     procname = aliases[procname]
   if procname == "Window":
     tags["window"] = nameSym
-
-  result.add newLetStmt(nameSym, newCall(
-    newIdentNode("new" & procname)
-  ))
 
   when defined(xguiTrace):
     var ttags = newSeq[string](0)
@@ -242,7 +240,20 @@ proc buildBlock(node: XmlNode, aliases: Table[string, string], config: XGuiConfi
       newDotExpr(nameSym, newIdentNode("text")),
       newLit(strpText)
     )
-  result.add nameSym
+  if parentSym == nil:
+    result.add nameSym
+  else:
+    result.add newCall(
+      newIdentNode("add"), 
+      parentSym,
+      nameSym
+    )
+
   result = newBlockStmt(result)
+  result = newStmtList(result)
+  result.insert 0, newLetStmt(nameSym, newCall(
+    newIdentNode("new" & procname)
+  ))
+
   when defined(xguiTrace):
     xmlDepth -= 1

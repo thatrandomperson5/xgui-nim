@@ -3,7 +3,7 @@ import xgui, nigui
 
 app.init()
 
-let w = loadGui("basic.xml")
+let w = loadGui("xml/basic.xml")
 w.width = 600.scaleToDpi
 w.height = 400.scaleToDpi
 

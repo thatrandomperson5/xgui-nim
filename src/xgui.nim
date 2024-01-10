@@ -67,7 +67,7 @@ when defined(xguiTrace):
 ##      let xguiElement_452984912 = newLayoutContainer(Layout_Vertical)
 ##      add(xguiElement_452984912, block:
 ##        let xguiElement_452984913 = newButton("")
-##        text=(xguiElement_452984913, "Button 1")
+##        text=(xguiElement_452984913, "Button 1") 
 ##        xguiElement_452984913)
 ##      add(xguiElement_452984912, block:
 ##        let xguiElement_452984920 = newTextArea("")
@@ -117,13 +117,15 @@ macro loadGui*(filename: static[string], aliases: static[Table[string, string]],
   
   when defined(xguiTrace):
     try:
-      result = handleXml(absolutePath(filename, config.xmlPath)).buildBlock(aliases, config)
+      result = handleXml(absolutePath(filename, config.xmlPath)).buildBlock(aliases, config, nil)
       echo result.repr
     finally:
       echo "\nPrinting trace: "
       mainTable.printTable()
   else:
-    result = handleXml(absolutePath(filename, config.xmlPath)).buildBlock(aliases, config)
+    result = handleXml(absolutePath(filename, config.xmlPath)).buildBlock(aliases, config, nil)
+  result = newBlockStmt(result)
+
 
 template loadGui*(filename: static[string]): untyped = loadGui(fileName, xmlAliases, defaultConfig)
   ## Template becuase of compile-time defaults bug

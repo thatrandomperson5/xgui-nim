@@ -1,1 +1,1 @@
-switch("path", "./xml")
+--path:"./xml"
